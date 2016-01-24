@@ -1,5 +1,7 @@
 /*! DataTables 1.10.11-dev
  * ©2008-2015 SpryMedia Ltd - datatables.net/license
+ * 2016/1/23 v1.10.10.p1 jeffen@pactera
+ * 			fixed: render data null by fnReloadAjax
  */
 
 /**
@@ -2164,6 +2166,11 @@
 	
 		body.children().detach();
 		body.append( $(anRows) );
+		
+		// fixed: render data null by fnReloadAjax jeffen@pactera 2016/1/23
+		if(oSettings.nTBody.offsetParent == null){
+			$(oSettings.nTable).html(body.html());
+		}
 	
 		/* Call all required callback functions for the end of a draw */
 		_fnCallbackFire( oSettings, 'aoDrawCallback', 'draw', [oSettings] );
